@@ -19,6 +19,8 @@ _db_port = int(getenv('DB_PORT', 3306))
 _db_user = getenv('DB_USER', None)
 _db_pass = getenv('DB_PASS', None)
 
+_month_start_date = int(getenv('MONTH_START_DATE', 25))
+
 
 # Code to initialize database driver based on ENV_VARs
 if _db_driver == 'mysql':
@@ -106,7 +108,7 @@ class PeeWeeStorage(IStorage):
 
     def get_items(self):
         r = []
-        f = get_last_xth_day()
+        f = get_last_xth_day(_month_start_date)
 
         self._con()
         for i in MBudgetItem.select().where(MBudgetItem.Date > f):  # type: MBudgetItem
